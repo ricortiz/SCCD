@@ -19,16 +19,16 @@ chars representing red, green and blue.
 ---------------------------------------------------------------
 
 Copyright (c) 1994 The Board of Trustees of The Leland Stanford
-Junior University.  All rights reserved.   
-  
-Permission to use, copy, modify and distribute this software and its   
-documentation for any purpose is hereby granted without fee, provided   
-that the above copyright notice and this permission notice appear in   
-all copies of this software and that you do not sell the software.   
-  
-THE SOFTWARE IS PROVIDED "AS IS" AND WITHOUT WARRANTY OF ANY KIND,   
-EXPRESS, IMPLIED OR OTHERWISE, INCLUDING WITHOUT LIMITATION, ANY   
-WARRANTY OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.   
+Junior University.  All rights reserved.
+
+Permission to use, copy, modify and distribute this software and its
+documentation for any purpose is hereby granted without fee, provided
+that the above copyright notice and this permission notice appear in
+all copies of this software and that you do not sell the software.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND WITHOUT WARRANTY OF ANY KIND,
+EXPRESS, IMPLIED OR OTHERWISE, INCLUDING WITHOUT LIMITATION, ANY
+WARRANTY OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE.
 
 */
 
@@ -181,7 +181,7 @@ PlyFile *ply_write(
      get_native_binary_type();
   if (!types_checked)
      check_types();
-  
+
   /* create a record for this object */
 
   plyfile = (PlyFile *) myalloc (sizeof (PlyFile));
@@ -202,7 +202,7 @@ PlyFile *ply_write(
   for (i = 0; i < nelems; i++) {
     elem = (PlyElement *) myalloc (sizeof (PlyElement));
     plyfile->elems[i] = elem;
-    elem->name = _strdup (elem_names[i]);
+    elem->name = strdup (elem_names[i]);
     elem->num = 0;
     elem->nprops = 0;
   }
@@ -747,7 +747,7 @@ PlyFile *ply_read(FILE *fp, int *nelems, char ***elem_names)
      get_native_binary_type();
   if (!types_checked)
      check_types();
-  
+
   /* create record for this object */
 
   plyfile = (PlyFile *) myalloc (sizeof (PlyFile));
@@ -768,7 +768,7 @@ PlyFile *ply_read(FILE *fp, int *nelems, char ***elem_names)
 	 free(words);
       return (NULL);
   }
-  
+
   while (words) {
 
     /* parse words */
@@ -802,7 +802,7 @@ PlyFile *ply_read(FILE *fp, int *nelems, char ***elem_names)
       free(words);
       break;
     }
-    
+
     /* free up words space */
     free (words);
 
@@ -1210,7 +1210,7 @@ PlyOtherProp *ply_get_other_properties(
 #endif
   other->size = elem->other_size;
   other->props = (PlyProperty **) myalloc (sizeof(PlyProperty) * elem->nprops);
-  
+
   /* save descriptions of each "other" property */
   nprops = 0;
   for (i = 0; i < elem->nprops; i++) {
@@ -1229,7 +1229,7 @@ PlyOtherProp *ply_get_other_properties(
     elem->other_offset = NO_OTHER_PROPS;
   }
 #endif
-  
+
   /* return structure */
   return (other);
 }
@@ -1337,7 +1337,7 @@ void ply_describe_other_elements (
   int i;
   OtherElem *other;
   PlyElement *elem;
-  
+
   /* ignore this call if there is no other element */
   if (other_elems == NULL)
     return;
@@ -1348,7 +1348,7 @@ void ply_describe_other_elements (
   /* describe the other properties of this element */
   /* store them in the main element list as elements with
      only other properties */
-  
+
   REALLOCN(plyfile->elems, PlyElement *,
 	   plyfile->nelems, plyfile->nelems + other_elems->num_elems);
   for (i = 0; i < other_elems->num_elems; i++) {
@@ -1784,7 +1784,7 @@ void swap_bytes(char *bytes, int num_bytes)
 {
     int i;
     char temp;
-    
+
     for (i=0; i < num_bytes/2; i++)
     {
 	temp = bytes[i];
@@ -1829,13 +1829,13 @@ void get_native_binary_type()
 void check_types()
 {
     if ((ply_type_size[PLY_CHAR] != sizeof(char)) ||
-	(ply_type_size[PLY_SHORT] != sizeof(short)) ||	
-	(ply_type_size[PLY_INT] != sizeof(int)) ||	
-	(ply_type_size[PLY_UCHAR] != sizeof(unsigned char)) ||	
-	(ply_type_size[PLY_USHORT] != sizeof(unsigned short)) ||	
-	(ply_type_size[PLY_UINT] != sizeof(unsigned int)) ||	
-	(ply_type_size[PLY_FLOAT] != sizeof(float)) ||	
-	//(ply_type_size[PLY_FLOAT32] != sizeof(float)) ||	
+	(ply_type_size[PLY_SHORT] != sizeof(short)) ||
+	(ply_type_size[PLY_INT] != sizeof(int)) ||
+	(ply_type_size[PLY_UCHAR] != sizeof(unsigned char)) ||
+	(ply_type_size[PLY_USHORT] != sizeof(unsigned short)) ||
+	(ply_type_size[PLY_UINT] != sizeof(unsigned int)) ||
+	(ply_type_size[PLY_FLOAT] != sizeof(float)) ||
+	//(ply_type_size[PLY_FLOAT32] != sizeof(float)) ||
 	(ply_type_size[PLY_DOUBLE] != sizeof(double)))
     {
 	//fprintf(stderr, "ply: Type sizes do not match built-in types (%d != %d)\n", ply_type_size[PLY_FLOAT32], sizeof(float));
@@ -1843,7 +1843,7 @@ void check_types()
 	fprintf(stderr, "ply: Exiting...\n");
 	exit(1);
     }
-    
+
     types_checked = 1;
 }
 
@@ -2030,7 +2030,7 @@ void write_binary_item(
   short short_val;
   float float_val;
   void  *value;
-  
+
   switch (type) {
     case PLY_CHAR:
       char_val = int_val;
@@ -2069,7 +2069,7 @@ void write_binary_item(
 
   if ((file_type != native_binary_type) && (ply_type_size[type] > 1))
      swap_bytes((char *)value, ply_type_size[type]);
-  
+
   if (fwrite (value, ply_type_size[type], 1, fp) != 1)
   {
       fprintf(stderr, "PLY ERROR: fwrite() failed -- aborting.\n");
@@ -2311,7 +2311,7 @@ void get_binary_item(
       fprintf(stderr, "PLY ERROR: fread() failed -- aborting.\n");
       exit(1);
   }
-  
+
 
   if ((file_type != native_binary_type) && (ply_type_size[type] > 1))
      swap_bytes((char *)ptr, ply_type_size[type]);

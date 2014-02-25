@@ -38,9 +38,10 @@
 
 \**************************************************************************/
 
-#include <math.h>
-#include <stdio.h>
-#include <assert.h>
+#include <iostream>
+#include <cmath>
+#include <cstdio>
+#include <cassert>
 
 #include "timing.h"
 extern CBVHTimer tm;
@@ -134,7 +135,7 @@ DeformModel::Clean()
 	if (_tris) delete [] _tris;
 	if (_tri_edges) delete [] _tri_edges;
 	if (_fac_boxes) delete [] _fac_boxes;
-	
+
 	if (_tri_nrms) delete [] _tri_nrms;
 	if (_old_tri_nrms) delete [] _old_tri_nrms;
 	if (_tri_flags) delete [] _tri_flags;
@@ -353,10 +354,6 @@ DeformModel::Covertex_F(unsigned int id1, unsigned int id2, unsigned int &st1, u
 
 	return num;
 }
-
-//##########################################################
-#include <stdio.h>
-#include <iostream>
 
 DeformModel::DeformModel(vec3f_list &vtxs, tri_list &tris)
 {
