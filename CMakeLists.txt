@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8.8)
 
-project(CCD)
+project(SCCD)
 
 # FindOpenMP
 find_package(OpenMP)

@@ -45,7 +45,7 @@
 
 #include "ccdAPI.h"
 
-char DATA_PATH[512]="d:\\data\\cloth_ball.plys\\cloth_ball";
+char DATA_PATH[512]="./cloth_ball.plys/cloth_ball";
 int NUM_FRAME=94;
 float MODEL_SCALE = 1.f;
 int SLICES = 5;

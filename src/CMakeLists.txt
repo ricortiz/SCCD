@@ -1,5 +1,5 @@
 
-set(CCD_SOURCES
+set(SCCD_SOURCES
   DeformBVH.cpp
   orphan.cpp
   timing.cpp
@@ -10,4 +10,4 @@ set(CCD_SOURCES
   DeformBVH-ptr.cpp
 )
 
-add_library(ccd ${CCD_SOURCES})
+add_library(sccd ${SCCD_SOURCES})
