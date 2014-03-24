@@ -40,59 +40,60 @@
 
 #pragma once
 
-#include <math.h>
-
+#include <limits>
+#include <cmath>
 #include "forceline.h"
-#define     GLH_ZERO            float(0.0)
-#define     GLH_EPSILON         float(10e-6)
-#define		GLH_EPSILON_2		float(10e-12)
-#define     equivalent(a,b)     (((a < b + GLH_EPSILON) && (a > b - GLH_EPSILON)) ? true : false)
+// #define     GLH_ZERO            float(0.0)
+// #define     GLH_EPSILON         float(10e-6)
+// #define		GLH_EPSILON_2		float(10e-12)
+// #define     equivalent(a,b)     (((a < b + GLH_EPSILON) && (a > b - GLH_EPSILON)) ? true : false)
 
-class vec3f {
+template<typename T>
+class vec3 {
 	union {
 		struct {
-		float x, y, z;
+		T x, y, z;
 		};
 		struct {
-		float v[3];
+		T v[3];
 		};
 	};
 public:
 
-	FORCEINLINE vec3f ()
+	FORCEINLINE vec3 ()
 	{x=0; y=0; z=0;}
 
-	FORCEINLINE vec3f(const vec3f &v)
+	FORCEINLINE vec3(const vec3 &v)
 	{
 		x = v.x;
 		y = v.y;
 		z = v.z;
 	}
 
-	FORCEINLINE vec3f(const float *v)
+	FORCEINLINE vec3(const T *v)
 	{
 		x = v[0];
 		y = v[1];
 		z = v[2];
 	}
 
-	FORCEINLINE vec3f(float x, float y, float z)
+	FORCEINLINE vec3(T x, T y, T z)
 	{
 		this->x = x;
 		this->y = y;
 		this->z = z;
 	}
 
-	FORCEINLINE float operator [] ( int i ) const {return v[i];}
+	FORCEINLINE T operator [] ( int i ) const {return v[i];}
 
-	FORCEINLINE vec3f &operator += (const vec3f &v) {
+	FORCEINLINE vec3 &operator += (const vec3 &v) {
 		x += v.x;
 		y += v.y;
 		z += v.z;
 		return *this;
 	}
 
-	FORCEINLINE vec3f &operator -= (const vec3f &v) {
+	FORCEINLINE vec3 &operator -= (const vec3 &v) {
 		x -= v.x;
 		y -= v.y;
 		z -= v.z;
@@ -105,61 +106,63 @@ public:
 		z = -z;
 	}
 
-	FORCEINLINE vec3f operator - () const {
-		return vec3f(-x, -y, -z);
+	FORCEINLINE vec3 operator - () const {
+		return vec3(-x, -y, -z);
 	}
 
-	FORCEINLINE vec3f operator+ (const vec3f &v) const
+	FORCEINLINE vec3 operator+ (const vec3 &v) const
 	{
-		return vec3f(x+v.x, y+v.y, z+v.z);
+		return vec3(x+v.x, y+v.y, z+v.z);
 	}
 
-	FORCEINLINE vec3f operator- (const vec3f &v) const
+	FORCEINLINE vec3 operator- (const vec3 &v) const
 	{
-		return vec3f(x-v.x, y-v.y, z-v.z);
+		return vec3(x-v.x, y-v.y, z-v.z);
 	}
 
-	FORCEINLINE vec3f operator *(float t) const
+	FORCEINLINE vec3 operator *(T t) const
 	{
-		return vec3f(x*t, y*t, z*t);
+		return vec3(x*t, y*t, z*t);
 	}
 
      // cross product
-     FORCEINLINE const vec3f cross(const vec3f &vec) const
+     FORCEINLINE const vec3 cross(const vec3 &vec) const
      {
-          return vec3f(y*vec.z - z*vec.y, z*vec.x - x*vec.z, x*vec.y - y*vec.x);
+          return vec3(y*vec.z - z*vec.y, z*vec.x - x*vec.z, x*vec.y - y*vec.x);
      }
 
-	 FORCEINLINE float dot(const vec3f &vec) const {
+	 FORCEINLINE T dot(const vec3 &vec) const {
 		 return x*vec.x+y*vec.y+z*vec.z;
 	 }
 
 	 FORCEINLINE void normalize() 
 	 { 
-		 float sum = x*x+y*y+z*z;
-		 if (sum > GLH_EPSILON_2) {
-			 float base = float(1.0/sqrt(sum));
+		 T sum = x*x+y*y+z*z;
+		 if (sum > std::numeric_limits<T>::epsilon()*std::numeric_limits<T>::epsilon()) {
+			 T base = T(1.0/sqrt(sum));
 			 x *= base;
 			 y *= base;
 			 z *= base;
 		 }
 	 }
 
-	 FORCEINLINE float length() {
-		 return float(sqrt(x*x + y*y + z*z));
+	 FORCEINLINE T length() {
+		 return T(sqrt(x*x + y*y + z*z));
 	 }
 
-	FORCEINLINE vec3f & set_value( const float &vx, const float &vy, const float &vz)
+	FORCEINLINE vec3 & set_value( const T &vx, const T &vy, const T &vz)
 	{ x = vx; y = vy; z = vz; return *this; }
 
-	FORCEINLINE bool equal_abs(const vec3f &other) {
+	FORCEINLINE bool equal_abs(const vec3 &other) {
 		return x == other.x && y == other.y && z == other.z;
 	}
 
-	FORCEINLINE float square_norm() const {
+	FORCEINLINE T square_norm() const {
 		return x*x+y*y+z*z;
 	}
 };
+
+typedef vec3<float> vec3f;
 
 #include <vector>
 typedef std::vector<vec3f> vec3f_list;
