@@ -64,7 +64,7 @@ GetCurrentVtxs(vec3f *all_vtxs, unsigned int vtx_num, unsigned int prev, unsigne
 	vec3f *prev_pt = all_vtxs+prev*vtx_num;
 	vec3f *next_pt = all_vtxs+next*vtx_num;
 
-	for (int i=0; i<vtx_num; i++) {
+	for (unsigned int i=0; i<vtx_num; i++) {
 		vtxs[i] = interp(prev_pt[i], next_pt[i], t);
 	}
 }
@@ -89,10 +89,10 @@ int main(int argc, char **argv)
 
 	ccdInitModel(vtxs, tris);
 
-	float circle = SLICES*NUM_FRAME;
-	for (int i=0; i<circle; i++) {
-		float t= i/circle*NUM_FRAME;
-		unsigned int prev_frame = ((int)t)%NUM_FRAME;
+	unsigned int circle = SLICES*NUM_FRAME;
+	for (unsigned int i=0; i<circle; i++) {
+		float t= float(i)/float(circle)*NUM_FRAME;
+		unsigned int prev_frame = int(t)%NUM_FRAME;
 		unsigned int next_frame = (prev_frame+1)%NUM_FRAME;
 
 		if (next_frame < prev_frame)

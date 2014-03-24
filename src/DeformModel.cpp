@@ -205,7 +205,7 @@ DeformModel::UpdateVert(vec3f_list &vtxs)
 {
 	swap(_prev_vtxs, _cur_vtxs);
 
-	for (int i=0; i<_num_vtx; i++) {
+	for (unsigned int i=0; i<_num_vtx; i++) {
 		_cur_vtxs[i] = vtxs[i];
 	}
 }
@@ -218,7 +218,7 @@ DeformModel::UpdateVert(unsigned int prev, unsigned int next, float t)
 
 	swap(_prev_vtxs, _cur_vtxs);
 
-	for (int i=0; i<_num_vtx; i++) {
+	for (unsigned int i=0; i<_num_vtx; i++) {
 		_cur_vtxs[i] = interp(prev_pt[i], next_pt[i], t);
 	}
 }
@@ -226,18 +226,18 @@ DeformModel::UpdateVert(unsigned int prev, unsigned int next, float t)
 void
 DeformModel::UpdateBoxes()
 {
-	for (int i=0; i<_num_vtx; i++) {
+	for (unsigned int i=0; i<_num_vtx; i++) {
 		_vtx_boxes[i] = BOX(_cur_vtxs[i]) + _prev_vtxs[i];
 	}
 
-	for (int i=0; i<_num_edge; i++) {
+	for (unsigned int i=0; i<_num_edge; i++) {
 		unsigned int id0 = _edges[i].vid(0);
 		unsigned int id1 = _edges[i].vid(1);
 
 		_edg_boxes[i] = _vtx_boxes[id0] + _vtx_boxes[id1];
 	}
 
-	for (int i=0; i<_num_tri; i++) {
+	for (unsigned int i=0; i<_num_tri; i++) {
 		unsigned int id0 = _tris[i].id0();
 		unsigned int id1 = _tri_edges[i].id(1);
 
@@ -371,7 +371,7 @@ DeformModel::Build(vec3f_list &vtxs, tri_list &tris)
 	_prev_vtxs = new vec3f[_num_vtx];
 	_vtx_boxes = new BOX[_num_vtx];
 	_vtx_fids = new id_list[_num_vtx];
-	for (int i=0; i<_num_vtx; i++) {
+	for (unsigned int i=0; i<_num_vtx; i++) {
 		_cur_vtxs[i] = _prev_vtxs[i] = vtxs[i];
 	}
 	cout << "Vtx # = " << _num_vtx << endl;
@@ -379,7 +379,7 @@ DeformModel::Build(vec3f_list &vtxs, tri_list &tris)
 	list<edge2f> edgelist_temp;
 	vector<tri3f> trilist_temp;
 
-	for (int i=0; i<tris.size(); i++) {
+	for (unsigned int i=0; i<tris.size(); i++) {
 		unsigned int id0 = tris[i].id0(), id1 = tris[i].id1(), id2 = tris[i].id2(), fid = i;
 
 		trilist_temp.push_back(tris[i]);
@@ -424,7 +424,7 @@ DeformModel::Build(vec3f_list &vtxs, tri_list &tris)
 	_prev_nrms = new vec3f[_num_tri];
 	_cur_flags = new unsigned int[_num_tri];
 	_prev_flags = new unsigned int [_num_tri];
-	for (int i=0; i<_num_tri; i++)
+	for (unsigned int i=0; i<_num_tri; i++)
 		_cur_flags[i] = _prev_flags[i] = -1;
 
 	_tri_edges = new tri3e[_num_tri];
