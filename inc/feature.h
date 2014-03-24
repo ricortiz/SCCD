@@ -40,6 +40,8 @@
 
 #pragma once
 
+
+#include<climits> 
 #include "forceline.h"
 
 class edge2f {

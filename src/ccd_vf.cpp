@@ -119,11 +119,11 @@ inline bool LineLineIntersect(
 
 	p13 = p1 - p3;
 	p43 = p4 - p3;
-	if (fabs(p43[0])  < GLH_EPSILON && fabs(p43[1])  < GLH_EPSILON && fabs(p43[2])  < GLH_EPSILON)
+	if (fabs(p43[0])  < std::numeric_limits<float>::epsilon() && fabs(p43[1])  < std::numeric_limits<float>::epsilon() && fabs(p43[2])  < std::numeric_limits<float>::epsilon())
 		return false;
 
 	p21 = p2 - p1;
-	if (fabs(p21[0])  < GLH_EPSILON && fabs(p21[1])  < GLH_EPSILON && fabs(p21[2])  < GLH_EPSILON)
+	if (fabs(p21[0])  < std::numeric_limits<float>::epsilon() && fabs(p21[1])  < std::numeric_limits<float>::epsilon() && fabs(p21[2])  < std::numeric_limits<float>::epsilon())
 		return false;
 
 	d1343 = p13.dot(p43);
@@ -133,7 +133,7 @@ inline bool LineLineIntersect(
 	d2121 = p21.dot(p21);
 
 	denom = d2121 * d4343 - d4321 * d4321;
-	if (fabs(denom) < GLH_EPSILON)
+	if (fabs(denom) < std::numeric_limits<float>::epsilon())
 		return false;
 	numer = d1343 * d4321 - d1321 * d4343;
 
@@ -439,7 +439,6 @@ Intersect_EE(const vec3f &ta0, const vec3f &tb0, const vec3f &tc0, const vec3f &
 	*/
 	double l = 0;
 	double r = 1;
-
 
 	double coeffs[4];
 	coeffs[3] = a, coeffs[2] = b, coeffs[1] = c, coeffs[0] = d;

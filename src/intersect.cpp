@@ -71,7 +71,7 @@ inline vec3f norm(vec3f &a, vec3f &b, vec3f &c, vec3f &d)
 	return (a-b).cross(c-d);
 }
 
-inline vec3f norm(vec3f &p1, vec3f &p2, vec3f &p3)
+inline vec3f norm(const vec3f &p1, const vec3f &p2, const vec3f &p3)
 {
 	return (p2-p1).cross(p3-p1);
 }
@@ -315,7 +315,7 @@ DeformModel::test_feature_0(unsigned id1, unsigned int id2)
 		for (int j=0; j<3; j++) {
 		unsigned int e0 = _tri_edges[id1].id(i);
 		unsigned int e1 = _tri_edges[id2].id(j);
-		
+
 		intersect_ee(e0, e1);
 	}
 
@@ -333,7 +333,7 @@ DeformModel::test_feature_0(unsigned id1, unsigned int id2)
 		for (int j=0; j<3; j++) {
 		unsigned int e0 = _tri_edges[id1].id(i);
 		unsigned int e1 = _tri_edges[id2].id(j);
-		
+
 		intersect_ee(e0, e1, id1, id2);
 	}
 }
