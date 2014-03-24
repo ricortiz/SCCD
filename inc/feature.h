@@ -40,7 +40,6 @@
 
 #pragma once
 
-#include <climits> // For UINT_MAX
 #include "forceline.h"
 
 class edge2f {

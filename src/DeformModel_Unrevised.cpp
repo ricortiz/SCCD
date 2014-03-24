@@ -171,9 +171,7 @@ DeformModel::Deform(float t, float circle)
 	return true;
 }
 
-//REVISE FOR VC11
-//#define swap(a, b)
-#define CCD_swap(a, b) {\
+#define swap(a, b) {\
 	vec3f *tmp = a;\
 	a = b;\
 	b = tmp;\
@@ -204,7 +202,7 @@ update(tri3f &tri, vec3f *vtxs)
 void
 DeformModel::UpdateVert(vec3f_list &vtxs)
 {
-	CCD_swap(_prev_vtxs, _cur_vtxs);
+	swap(_prev_vtxs, _cur_vtxs);
 
 	for (int i=0; i<_num_vtx; i++) {
 		_cur_vtxs[i] = vtxs[i];
@@ -217,7 +215,7 @@ DeformModel::UpdateVert(unsigned int prev, unsigned int next, float t)
 	vec3f *prev_pt = _vtxs+prev*_num_vtx;
 	vec3f *next_pt = _vtxs+next*_num_vtx;
 
-	CCD_swap(_prev_vtxs, _cur_vtxs);
+	swap(_prev_vtxs, _cur_vtxs);
 
 	for (int i=0; i<_num_vtx; i++) {
 		_cur_vtxs[i] = interp(prev_pt[i], next_pt[i], t);

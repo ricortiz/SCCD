@@ -41,24 +41,28 @@
 #pragma once
 
 #include "vec3f.h"
+#include <float.h>
+#include <stdlib.h>
 
+#define MAX(a,b)	((a) > (b) ? (a) : (b))
+#define MIN(a,b)	((a) < (b) ? (a) : (b))
 
 inline void
 vmin(vec3f &a, const vec3f &b)
 {
 	a.set_value(
-		std::min(a[0], b[0]),
-		std::min(a[1], b[1]),
-		std::min(a[2], b[2]));
+		MIN(a[0], b[0]),
+		MIN(a[1], b[1]),
+		MIN(a[2], b[2]));
 }
 
 inline void
 vmax(vec3f &a, const vec3f &b)
 {
 	a.set_value(
-		std::max(a[0], b[0]),
-		std::max(a[1], b[1]),
-		std::max(a[2], b[2]));
+		MAX(a[0], b[0]),
+		MAX(a[1], b[1]),
+		MAX(a[2], b[2]));
 }
 
 
@@ -101,14 +105,14 @@ public:
 			return false;
 
 		ret._min.set_value(
-			std::max(_min[0],  b._min[0]),
-			std::max(_min[1],  b._min[1]),
-			std::max(_min[2],  b._min[2]));
+			MAX(_min[0],  b._min[0]),
+			MAX(_min[1],  b._min[1]),
+			MAX(_min[2],  b._min[2]));
 
 		ret._max.set_value(
-			std::min(_max[0], b._max[0]),
-			std::min(_max[1], b._max[1]),
-			std::min(_max[2], b._max[2]));
+			MIN(_max[0], b._max[0]),
+			MIN(_max[1], b._max[1]),
+			MIN(_max[2], b._max[2]));
 
 		return true;
 	}
@@ -146,7 +150,7 @@ public:
 	FORCEINLINE float volume() const { return width()*height()*depth(); }
 
 	FORCEINLINE void empty() {
-		_max = vec3f(-std::numeric_limits< float >::max(), -std::numeric_limits< float >::max(), -std::numeric_limits< float >::max());
-		_min = vec3f(std::numeric_limits< float >::max(), std::numeric_limits< float >::max(), std::numeric_limits< float >::max());
+		_max = vec3f(-FLT_MAX, -FLT_MAX, -FLT_MAX);
+		_min = vec3f(FLT_MAX, FLT_MAX, FLT_MAX);
 	}
 };
