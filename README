@@ -41,6 +41,10 @@
 This is the Self-CCD collision detection package.
 
 ------------------------------------------------------------------------------
+1. Building Instructions:
+------------------------------------------------------------------------------
+Use cmake to build the library. You can obtain cmake from [here http://www.cmake.org]
+------------------------------------------------------------------------------
 1. Installation Instructions:
 ------------------------------------------------------------------------------
 
