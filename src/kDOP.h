@@ -47,6 +47,42 @@
 #define MAX(a,b)	((a) > (b) ? (a) : (b))
 #define MIN(a,b)	((a) < (b) ? (a) : (b))
 
+
+template<typename T, int _k>
+class DiscreteOrientedPolytope
+{
+
+  enum { K = _k };
+  
+  DiscreteOrientedPolytope()
+  {
+    T real_max = std::numeric_limits<T>::max();
+    for(size_t i = 0; i < K / 2; ++i)
+    {
+      dist[i] = real_max;
+      dist[i + K / 2] = -real_max;
+    }
+  }
+  DiscreteOrientedPolytope(const vec3f& v)
+{
+  for(size_t i = 0; i < 3; ++i)
+  {
+    dist[i] = dist[K / 2 + i] = v[i];
+  }
+
+  T d[(K - 6) / 2];
+  getDistances<(K - 6) / 2>(v, d);
+  
+  for(size_t i = 0; i < (K - 6) / 2; ++i)
+  {
+    dist[3 + i] = dist[3 + i + K / 2] = d[i];
+  }
+  
+}
+private:
+  T dist[K];
+};
+
 class kDOP18 {
 public:
 	FORCEINLINE static void getDistances(const vec3f& p,
