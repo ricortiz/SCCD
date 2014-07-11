@@ -227,7 +227,6 @@ void BuildSession(char *fname, unsigned int num_frame, float ply_scale,
 
 		// PLY parsing ended, clean up vertex buffer and close the file		
 		ply_close(ply);
-		fclose(fp);
 	}
 
 	assert(vtxs.size() == vtx_num);
